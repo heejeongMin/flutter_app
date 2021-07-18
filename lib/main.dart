@@ -1,11 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
 
-final dummyItems = [
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT9OEI5ksJ36dLeqBwlCcCoHgXTKoJCCDHog&usqp=CAU',
- 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZg3fQB-4p87IiEWYlsEwmFFVxY4vkmpqOrQ&usqp=CAU',
- 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT198cPC8nNtWPF6sqPb71qOY2-WtUCh3WxYg&usqp=CAU',
-];
+import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,264 +11,257 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: BmiMain(),
     );
   }
 }
 
-class Page1 extends StatelessWidget {
+class BmiMain extends StatefulWidget{
   @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        _buildTop(),
-        _buildMiddle(),
-        _buildBottom(),
-      ]
-    );
+  State<StatefulWidget> createState() {
+    return _BmiMainState();
   }
 
-  Widget _buildTop(){
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 20),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GestureDetector(
-                onTap: (){
-                  print('클릭');
-                },
-                child: Column(
-                  children: <Widget>[
-                    Icon(
-                      Icons.local_taxi,
-                      size: 40,
-                    ),
-                    Text('택시'),
-                    // _buildTop(),
-                    // _buildMiddle(),
-                    // _buildBottom()
-                  ],
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  print('test');
-                },
-                child: Column(
-                  children: <Widget>[
-                    Icon(
-                      Icons.local_taxi,
-                      size: 40,
-                    ),
-                    Text('택시'),
-                    // _buildTop(),
-                    // _buildMiddle(),
-                    // _buildBottom()
-                  ],
-                ),
-              ),
-              Column(
-                children: <Widget>[
-                  Icon(
-                    Icons.local_taxi,
-                    size: 40,
-                  ),
-                  Text('택시'),
-                  // _buildTop(),
-                  // _buildMiddle(),
-                  // _buildBottom()
-                ],
-              ),
-              Column(
-                children: <Widget>[
-                  Icon(
-                    Icons.local_taxi,
-                    size: 40,
-                  ),
-                  Text('택시'),
-                  // _buildTop(),
-                  // _buildMiddle(),
-                  // _buildBottom()
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: <Widget>[
-                  Icon(
-                    Icons.local_taxi,
-                    size: 40,
-                  ),
-                  Text('택시'),
-                  // _buildTop(),
-                  // _buildMiddle(),
-                  // _buildBottom()
-                ],
-              ),
-              Column(
-                children: <Widget>[
-                  Icon(
-                    Icons.local_taxi,
-                    size: 40,
-                  ),
-                  Text('택시'),
-                  // _buildTop(),
-                  // _buildMiddle(),
-                  // _buildBottom()
-                ],
-              ),
-              Column(
-                children: <Widget>[
-                  Icon(
-                    Icons.local_taxi,
-                    size: 40,
-                  ),
-                  Text('택시'),
-                  // _buildTop(),
-                  // _buildMiddle(),
-                  // _buildBottom()
-                ],
-              ),
-              Opacity(
-                opacity: 0.0,
-                child: Column(
-                  children: <Widget>[
-                    Icon(
-                      Icons.local_taxi,
-                      size: 40,
-                    ),
-                    Text('택시'),
-                    // _buildTop(),
-                    // _buildMiddle(),
-                    // _buildBottom()
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMiddle() {
-    return CarouselSlider(
-      options: CarouselOptions(
-          height: 150.0,
-        autoPlay: true
-      ),
-      items: dummyItems.map((url) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                decoration: BoxDecoration(color: Colors.amber),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    url,
-                    fit: BoxFit.cover,
-                  )
-                )
-            );
-          },
-        );
-      }).toList(),
-    );
-  }
-
-  Widget _buildBottom(){
-    final items = List.generate(10, (i) {
-      return ListTile(
-        leading: Icon(Icons.notifications_none),
-        title: Text('[이벤트] 이것은 공지사항입니다.'),
-      );
-    });
-    return ListView(
-      physics: NeverScrollableScrollPhysics(), //스크롤 안에 스크롤을 넣는 경우 안쪽을 스크롤을 못하게
-      shrinkWrap: true, //스크롤이 가능한 객체 안에 다시 스크롤이 가능한 객체를 넣는 경우 항상 true
-      children: items,
-    );
-  }
 }
 
-class Page2 extends StatelessWidget {
+class _BmiMainState extends State<BmiMain> {
+  final _heightController = TextEditingController();
+  final _weightController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
   @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: Text(
-      '이용서비스',
-      style: TextStyle(fontSize: 40),
-    ));
+  void dispose(){
+    _heightController.dispose();
+    _weightController.dispose();
+    super.dispose();
   }
-}
-
-class Page3 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        '내 정보',
-        style: TextStyle(fontSize: 40),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  var _index = 0;
-  var _pages = [Page1(), Page2(), Page3()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          '복잡한 UI',
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.add,
-              color: Colors.black,
-            ),
-            onPressed: () {},
+      appBar: AppBar(title: Text('비만도 계산기')),
+      body: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: '키',
+                ),
+                controller: _heightController,
+                keyboardType: TextInputType.number,
+                validator: (value){
+                  if(value!.trim().isEmpty){
+                    return '키를 입력하세요';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: 16.0,
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: '몸무게'
+                ),
+                controller: _weightController,
+                keyboardType: TextInputType.number,
+                validator: (value){
+                  if(value!.trim().isEmpty){
+                    return '몸무게를 입력하세요';
+                  }
+                  return null;
+                },
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 16.0),
+                alignment: Alignment.centerRight,
+                child: ElevatedButton(
+                  onPressed: (){
+                    //폼에 입력된 값 검증
+                    if(_formKey.currentState!.validate()){
+                      //검증처리
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BmiResult(
+                            double.parse(_heightController.text.trim()),
+                            double.parse(_weightController.text.trim()))),
+                      );
+                    }
+                  },
+                  child: Text('결과'),
+                )
+              )
+            ],
           )
-        ],
-      ),
-      body: _pages[_index],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) {
-          setState(() {
-            _index = index;
-          });
-        },
-        currentIndex: _index,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(label: '홈', icon: Icon(Icons.home)),
-          BottomNavigationBarItem(label: '이용서비스', icon: Icon(Icons.assignment)),
-          BottomNavigationBarItem(
-              label: '내 정보', icon: Icon(Icons.account_circle)),
-        ],
+        )
+      )
+    );
+  }
+
+}
+
+class BmiResult extends StatelessWidget {
+  final double height;
+  final double weight;
+
+  BmiResult(this.height, this.weight);
+
+  @override
+  Widget build(BuildContext context) {
+    final bmi = weight / ((height/100) * (height/100));
+    print('bmi : $bmi');
+
+    String _calcBmi(double bmi) {
+      if(bmi >= 35){
+        return '고도 비만';
+      } else if(bmi >= 30) {
+        return '2단계 비만';
+      } else if(bmi >= 25) {
+        return '1단계 비만';
+      } else if(bmi >= 23){
+        return '과체중';
+      } else if(bmi >= 18.5){
+        return '정상';
+      } else {
+        return '저체중';
+      }
+    }
+
+    Widget _buildIcon(double bmi) {
+      if(bmi >= 23){
+        return Icon(
+          Icons.sentiment_very_dissatisfied,
+          color: Colors.red,
+          size: 100,
+        );
+      } else if(bmi >= 18.5) {
+        return Icon(
+          Icons.sentiment_satisfied,
+          color: Colors.green,
+          size: 100,
+        );
+      } else {
+        return Icon(
+          Icons.sentiment_dissatisfied,
+          color: Colors.orange,
+          size: 100,
+        );
+      }
+    }
+
+    return Scaffold(
+      appBar: AppBar(title: Text('비만도 계산기')),
+      body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                _calcBmi(bmi),
+                style: TextStyle(fontSize: 36),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              _buildIcon(bmi),
+            ],
+          )
       ),
     );
   }
 }
+
+//
+// class MyCustomForm extends StatefulWidget {
+//   @override
+//   State<StatefulWidget> createState() {
+//     return _MyCustomFormState();
+//   }
+// }
+//
+// class _MyCustomFormState extends State<MyCustomForm> {
+//   final _formKey = GlobalKey<FormState>();//Form 위젯에 유니크한 키값을 부여하고 검증시 사용
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Form(
+//       key: _formKey, //Form위젯에 formkey를 지정
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           TextFormField(
+//             validator: (value){
+//               if(value!.isEmpty){
+//                 return "글자를 입력하세요.";
+//               }
+//               return null;
+//             },
+//           ),
+//           Padding(
+//             padding: const EdgeInsets.symmetric(vertical: 16.0),
+//             child: ElevatedButton(
+//               onPressed: (){
+//                 if(_formKey.currentState!.validate()){
+//                   ScaffoldMessenger.of(context)
+//                       .showSnackBar(SnackBar(content: Text("검증완료")));
+//                 }
+//               },
+//               child: Text('검증'),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// class _MyCustomFormState extends State<MyCustomForm> {
+//   final myController = TextEditingController(); //TextField의 현재값을 얻는데 필요
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     myController.addListener(_printLatestValue); //상태 모니터
+//   }
+//
+//   @override
+//   void dispose() { //화면 종료시 반드시 위켓 트리에서 컨트롤러를 해제해야 한다.
+//     myController.dispose();
+//     super.dispose();
+//   }
+//
+//   _printLatestValue() {
+//     print("두 번째 text field: ${myController.text}");
+//   }
+//
+//
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Column(
+//           children: [
+//             TextField(//text 변경 감지
+//               onChanged: (text){
+//                 print("첫 번째 text field: $text");
+//               },
+//             ),
+//             TextField(
+//               controller: myController, //컨트롤러 지정
+//             )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
